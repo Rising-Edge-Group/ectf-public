@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ectf-public"
+version = "0.5.0b1"
+description = "Command Line Interface designed to interact with echoCTF.RED"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Dante Mendoza Leyva (Apocryphon-X)", email = "apocryphon.x.contact@gmail.com"},
+    {name = "Rising Edge Club"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+dynamic = ["version"]
+requires-python = ">=3.10"
+
+[tool.setuptools.dynamic]
+version = {attr = "src.session.__version__"}
+
+dependencies = [
+    "requests==2.32.3",
+    "click==8.1.7",
+    "beautifulsoup4==4.12.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/Rising-Edge-Group/ectf-public"
+
+[project.scripts]
+ectf = "src.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
