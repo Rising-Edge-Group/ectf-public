@@ -15,8 +15,12 @@ Commands:
   claim  Attempts to claim the specified `FLAG`.
   spin   Spins the target specified by `TARGET_ID`.
 ```
+### Installation from source via [pipx][1]
 
-Configuration file sample structure:
+```bash
+pipx install git+https://github.com/Apocryphon-X/omegaup-cli
+```
+### Configuration file sample structure:
 ```json
 {
     "instance_url" : "https://echoctf.red/",
@@ -24,3 +28,5 @@ Configuration file sample structure:
 }
 
 ```
+
+[1]: https://pipx.pypa.io/stable/
