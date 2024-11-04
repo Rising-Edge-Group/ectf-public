@@ -20,24 +20,16 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
 ]
-dynamic = ["version"]
 requires-python = ">=3.10"
-
-[tool.setuptools.dynamic]
-version = {attr = "src.session.__version__"}
-
 dependencies = [
     "requests==2.32.3",
     "click==8.1.7",
-    "beautifulsoup4==4.12.2",
+    "beautifulsoup4==4.12.2"
 ]
 
 [project.urls]
 Homepage = "https://github.com/Rising-Edge-Group/ectf-public"
 
 [project.scripts]
-ectf = "src.cli:main"
-
-[tool.setuptools.packages.find]
-where = ["src"]
+ectf = "ectf.cli:main"
 
