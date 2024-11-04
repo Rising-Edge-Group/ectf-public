@@ -36,6 +36,14 @@ class echoSession(requests.Session):
     _available_targets = None  # TODO: Refactorize
 
     def __init__(self, instance_url, identity_cookie, *args, **kwargs):
+        """Initializes an `echoSession` with the specified base URL and identity cookie.
+
+        Args:
+            instance_url (str): The base URL of the echoCTF platform instance.
+            identity_cookie (str): Cookie string for identity verification.
+            *args: Variable length argument list passed to `requests.Session`.
+            **kwargs: Arbitrary keyword arguments passed to `requests.Session`.
+        """
         parsed_url = urlparse(instance_url)
         self.main_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
 
@@ -43,7 +51,11 @@ class echoSession(requests.Session):
         self.cookies["_identity-red"] = identity_cookie
 
     def spin_target(self, target_id: int) -> None:
-        """Sends a spin request to echoCTF for `target_id` machine"""
+        """Sends a request to "spin" a target machine by its ID.
+
+        Args:
+            target_id (int): Unique identifier for the target machine.
+        """
         target_site_html = self.get(f"{self.main_url}/target/{target_id}").text
         csrf_token = utils.extract_csrf_token(target_site_html)
 
@@ -52,9 +64,13 @@ class echoSession(requests.Session):
             data={"_csrf-red": csrf_token},
         )
 
-    # NOTE: "https://echoctf.red/targets?target-page=1"
+    # TODO: Refactorize and test even more
     def targets_list(self) -> List[Tuple[str, int]]:
-        """Returns a list of tuples in the next format: (target_name, target_number)"""
+        """Fetches and returns a list of available targets in the form of (target_name, target_id).
+
+        Returns:
+            List[Tuple[str, int]]: A list of tuples, each containing a target's name and its unique ID.
+        """
         targets_html_site = self.get(f"{self.main_url}/targets").text
         html_parser = BeautifulSoup(targets_html_site, "html.parser")
 
@@ -85,9 +101,25 @@ class echoSession(requests.Session):
         return return_list
 
     def is_active(self, target_id: int) -> bool:
+        """Determines if a specific target is currently active.
+
+        Args:
+            target_id (int): The ID of the target to check.
+
+        Returns:
+            bool: True if the target is active, False otherwise.
+        """
         raise NotImplementedError
 
     def claim_flag(self, flag: str) -> FlagAlerts:
+        """Attempts to claim a flag and returns the result status.
+
+        Args:
+            flag (str): The flag string to be claimed.
+
+        Returns:
+            FlagAlerts: Enum indicating the status of the flag claim attempt.
+        """
         main_page_html = self.get(f"{self.main_url}/dashboard").text
         csrf_token = utils.extract_csrf_token(main_page_html)
         self.post(
