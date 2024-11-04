@@ -18,7 +18,7 @@ Commands:
 ### Installation from source via [pipx][1]
 
 ```bash
-pipx install git+https://github.com/Apocryphon-X/omegaup-cli
+pipx install git+https://github.com/Rising-Edge-Group/ectf-public
 ```
 ### Configuration file sample structure:
 ```json
